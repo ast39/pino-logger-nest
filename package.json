@@ -28,6 +28,7 @@
     "class-validator": "^0.14.1",
     "clean-stack": "^5.2.0",
     "dayjs": "^1.11.10",
+    "nestjs-pino": "^4.0.0",
     "pino": "^9.0.0",
     "pino-http": "^9.0.0",
     "pino-pretty": "^11.0.0",
