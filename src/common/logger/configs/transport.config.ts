@@ -11,7 +11,7 @@ export const fileTransport: TransportTargetOptions = {
   options: {
     genReqId: uuid,
     autoLogging: true,
-    destination: PinoConfig.LOG_PATH + PinoConfig.LOG_FILE,
+    destination: PinoConfig.LOG_PATH + '/' + PinoConfig.LOG_FILE,
     mkdir: PinoConfig.LOG_MKDIR,
     sync: PinoConfig.PINO_SYNC,
     minLength: PinoConfig.LOG_MIN_LENGTH,

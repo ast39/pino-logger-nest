@@ -1,10 +1,16 @@
 import { Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
-import { LoggerFileConfig } from './configs/logger-file.config';
+import { MyLoggerService } from './my-logger.service';
+import { pinoConfigAsParams } from './mutators/logger.mutator';
+import { LoggerFileConfig } from './lib/logger-file.config';
 
 @Module({
-  imports: [LoggerModule.forRoot(LoggerFileConfig)],
-  providers: [],
-  exports: [],
+  imports: [
+    LoggerModule.forRoot(
+      pinoConfigAsParams(new LoggerFileConfig().getConfig()),
+    ),
+  ],
+  providers: [MyLoggerService],
+  exports: [MyLoggerService],
 })
 export class MyLoggerModule {}

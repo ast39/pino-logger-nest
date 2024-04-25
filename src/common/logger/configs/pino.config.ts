@@ -1,11 +1,12 @@
 import * as dayjs from 'dayjs';
+import { ELogLevel } from '../enums/log-level.enum';
 
 // текущая дата
 const today = dayjs().format('YY-MM-DD');
 
 export const PinoConfig = {
   // дефолтный уровень логирования, ниже которого лог не пишется
-  PINO_LOG_LEVEL: 'info',
+  PINO_LOG_LEVEL: ELogLevel.INFO,
 
   // кастомные уровни логирования
   PINO_CUSTOM_LEVELS: {
@@ -26,10 +27,10 @@ export const PinoConfig = {
   LOG_MIN_LENGTH: 4,
 
   // ключи-исключения, которые не логируются или скрываются
-  REDACT_EXCLUDE: ['password', 'refresh_token'],
+  REDACT_EXCLUDE: ['hostname', 'password', 'refresh_token'],
 
   // путь до каталога с логами
-  LOG_PATH: './src/common/logger/logs/',
+  LOG_PATH: './logs',
 
   // имя файла с логами
   LOG_FILE: today + '.log',
