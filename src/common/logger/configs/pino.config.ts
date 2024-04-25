@@ -1,3 +1,8 @@
+import * as dayjs from 'dayjs';
+
+// текущая дата
+const today = dayjs().format('YY-MM-DD');
+
 export const PinoConfig = {
   // дефолтный уровень логирования, ниже которого лог не пишется
   PINO_LOG_LEVEL: 'info',
@@ -25,4 +30,7 @@ export const PinoConfig = {
 
   // путь до каталога с логами
   LOG_PATH: './src/common/logger/logs/',
+
+  // имя файла с логами
+  LOG_FILE: today + '.log',
 };
