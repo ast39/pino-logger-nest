@@ -1,6 +1,8 @@
 import { Logger } from '@nestjs/common';
-import { PinoConfig } from './configs/pino.config';
 import pino from 'pino';
+import { PinoConfig } from './configs/pino.config';
+import { console, file } from './configs/transports';
+import { IncomingMessage, ServerResponse } from 'http';
 
 export class MyLoggerService extends Logger {
   private readonly logger;
@@ -9,22 +11,7 @@ export class MyLoggerService extends Logger {
     super();
 
     const transport = pino.transport({
-      targets: [
-        {
-          target: 'pino/file',
-          options: {
-            destination: './src/common/logger/logs/output.log',
-            mkdir: PinoConfig.LOG_MKDIR,
-            colorize: PinoConfig.PINO_COLORIZE,
-            sync: PinoConfig.PINO_SYNC,
-            minLength: PinoConfig.LOG_MIN_LENGTH,
-          },
-        },
-        {
-          target: 'pino-pretty',
-          options: { destination: './src/common/logger/logs/output.log' },
-        },
-      ],
+      targets: [file, console],
     });
 
     this.logger = pino(
@@ -40,6 +27,21 @@ export class MyLoggerService extends Logger {
           paths: PinoConfig.REDACT_EXCLUDE,
           censor: '******',
           remove: false,
+        },
+        serializers: {
+          req(request: IncomingMessage) {
+            return {
+              method: request.method,
+              url: request.url,
+              headers: request.headers,
+              body: request['raw']['body'],
+            };
+          },
+          res(reply: ServerResponse) {
+            return {
+              statusCode: reply.statusCode,
+            };
+          },
         },
       },
       transport,
