@@ -39,7 +39,10 @@ export const LoggerFileConfig: Params = {
       req: (request: IncomingMessage) => ({
         method: request.method,
         url: request.url,
-        headers: request.headers,
+        headers: {
+          host: request.headers.host,
+          'user-agent': request.headers['user-agent'],
+        },
         body: request['raw']['body'],
       }),
       res: (reply: ServerResponse) => ({
